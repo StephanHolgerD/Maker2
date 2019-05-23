@@ -2,7 +2,7 @@
 FROM ubuntu:16.04
 WORKDIR /opt/Maker
 ADD ./trf /usr/local/bin
-ADD ./maker/ /opt/Maker/maker
+ADD ./maker-2.31.10.tgz /opt/Maker/
 RUN apt-get update && apt-get -y install \
     build-essential \
     wget \
@@ -38,8 +38,8 @@ RUN apt-get update && apt-get -y install \
   wget http://www.repeatmasker.org/RepeatMasker-open-4-0-7.tar.gz ; \
   wget http://korflab.ucdavis.edu/Software/snap-2013-11-29.tar.gz ; \
   wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.2.28/ncbi-blast-2.2.28+-x64-linux.tar.gz ; \
-  wget https://www.girinst.org/server/RepBase/protected/repeatmaskerlibraries/RepBaseRepeatMaskerEdition-20170127.tar.gz ; \
   wget http://ftp.ebi.ac.uk/pub/software/vertebrategenomics/exonerate/exonerate-2.2.0-x86_64.tar.gz ; \
+  tar -xzvf maker-2.31.10.tgz ;\
   tar -xzvf RepeatMasker-open-4-0-7.tar.gz ;\
   tar -xzvf snap-2013-11-29.tar.gz ;\
   tar -xzvf exonerate-2.2.0-x86_64.tar.gz ;\
@@ -54,7 +54,6 @@ RUN apt-get update && apt-get -y install \
       make all ; \
       make install ; \
       cd .. ; \
-  cd RepeatMasker ; printf "\n\n\n\n4\n/usr/bin/\n\n5\n" | ./configure ; cd .. ; \
   rm *tar.gz ;
 
 ENV PATH=${PATH}:\
@@ -68,4 +67,4 @@ ENV PATH=${PATH}:\
 
 #RUN cd maker/src && printf "y\n\n\n" | perl Build.PL && ./Build installdeps ; \
 
-#RUN cd RepeatMasker ; printf "\n\n\n\n4\n/usr/bin/\n\n5\n" | ./configure ; cd ../maker/src && printf "y\n\n\n" | perl Build.PL && ./Build installdeps && ./Build status
+RUN cd RepeatMasker ; printf "\n\n\n\n4\n/usr/bin/\n\n5\n" | ./configure ; cd ../maker/src && printf "y\n\n\n" | perl Build.PL && ./Build install
