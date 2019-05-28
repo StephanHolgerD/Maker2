@@ -5,6 +5,7 @@ ADD ./trf /usr/local/bin
 ADD ./maker-2.31.10.tgz /opt/Maker/
 RUN apt-get update && apt-get -y install \
     build-essential \
+    ssh \
     wget \
     libboost-iostreams-dev \
     zlib1g-dev \
