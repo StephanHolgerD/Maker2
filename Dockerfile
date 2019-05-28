@@ -13,6 +13,19 @@ RUN apt-get update && apt-get -y install \
     libbamtools-dev \
     libgd-dev \
     hmmer ; \
+  wget http://www.cpan.org/src/5.0/perl-5.22.2.tar.gz ;\
+  tar -xzvf perl-5.22.2.tar.gz ;\
+  mkdir localperl ;\
+    cd perl-5.22.2 ;\
+    ./Configure -des -Dprefix=/opt/Maker/localperl ;\
+    make ;\
+    make test ;\
+    make install ;\
+    mv /usr/bin/perl /usr/bin/perl_default ;\
+    mv /usr/bin/cpan /usr/bin/cpan_default ;\
+    export PATH="/opt/Maker/localperl/bin:$PATH" ;\
+    cd .. ;\
+  printf "\n" | cpan ; \
   cpan App::cpanminus ; \
   cpanm \
     File::Which \
@@ -64,8 +77,11 @@ ENV PATH=${PATH}:\
 :/opt/Maker/exonerate-2.2.0-x86_64/bin\
 :/opt/Maker/augustus-3.2.3/bin\
 :/opt/Maker/openmpi/bin\
-:/opt/Maker/maker
+:/opt/Maker/maker/bin\
+:/opt/Maker/localperl/bin
 
 #RUN cd maker/src && printf "y\n\n\n" | perl Build.PL && ./Build installdeps ; \
 
-RUN cd RepeatMasker ; printf "\n\n\n\n4\n/usr/bin/\n\n5\n" | ./configure ; cd ../maker/src && printf "y\n\n\n" | perl Build.PL && ./Build install
+#RUN cd RepeatMasker ; printf "\n\n\n\n4\n/usr/bin/\n\n5\n" | ./configure ; cd ../maker/src && printf "y\n\n\n" | perl Build.PL && ./Build install
+VOLUME /data
+WORKDIR /data
