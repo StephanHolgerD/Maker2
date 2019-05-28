@@ -29,7 +29,7 @@ RUN apt-get update && apt-get -y install \
   cpan App::cpanminus ; \
   cpanm \
     File::Which \
-    Bio::Root::Version \
+    Bio::Perl \
     IO::All \
     IO::Prompt \
     DBD::SQLite \
@@ -81,7 +81,6 @@ ENV PATH=${PATH}:\
 :/opt/Maker/localperl/bin
 
 #RUN cd maker/src && printf "y\n\n\n" | perl Build.PL && ./Build installdeps ; \
-
-#RUN cd RepeatMasker ; printf "\n\n\n\n4\n/usr/bin/\n\n5\n" | ./configure ; cd ../maker/src && printf "y\n\n\n" | perl Build.PL && ./Build install
+RUN cd RepeatMasker ; printf "\n\n\n\n4\n/usr/bin/\n\n5\n" | ./configure ; cd ../maker/src && printf "y\n\n\n" | perl Build.PL && ./Build install
 VOLUME /data
 WORKDIR /data
