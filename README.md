@@ -1,12 +1,12 @@
-##Dockerfile to Build Maker2 image
+## Dockerfile to Build Maker2 image
 
-maker2 publication  https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-12-491
+* [maker2 publication]  (https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-12-491)
 
-*using a localperl installation to enable the mpi (default perl comes with pthread support which leads to errors maker is run with mpiexec)
-*substitution of with default perl with loacalperl at the moment quick and dirty
-*trf is provided ia this git because of problems whens loading the binary with wget
+* using a localperl installation to enable the mpi (default perl comes with pthread support which leads to errors maker is run with mpiexec)
+* substitution of with default perl with loacalperl at the moment quick and dirty
+* trf is provided ia this git because of problems whens loading the binary with wget
 
-*use the image like this:
+* use the image like this:
 
 ```
 docker run -it -v $(pwd):/media maker -CTL
