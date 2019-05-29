@@ -9,13 +9,13 @@
 * use the image like this:
 
 ```
-docker run -it -v $(pwd):/media maker -CTL
+docker run -it -v $PWD:/media maker -CTL
 ```
 
 creates the maker control fles in the current working directory
 
 ```
-docker run -it -v $(pwd):/media maker
+docker run -it -v $PWD:/media maker
 
 ```
 starts the maker run when all three control files are located in the current working directory
@@ -24,8 +24,23 @@ paths to data files should start with /media because this is theworking director
 
 
 ```
-docker run -it -v $(pwd):/media mpiexec -n 24 --allow-run-as-root maker
+docker run -it -v $PWD:/media mpiexec -n 24 --allow-run-as-root maker
 
  ```
 
  runs maker with 24 cores and openmpi
+
+using a hostfile that looks like this to define the number of available slots for openmpi
+```
+localhost slots=4
+
+```
+run it like this
+
+```
+docker run -it -v $PWD:/media mpiexec -n 24 --allow-run-as-root maker --hostfile hostfile
+
+```
+
+# Author
+Stephan drukewitz --> stephan.drukewitz@ime.fraunofer.de
