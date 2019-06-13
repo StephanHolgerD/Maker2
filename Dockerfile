@@ -81,6 +81,9 @@ ENV PATH=${PATH}:\
 :/opt/Maker/localperl/bin
 
 RUN cd RepeatMasker ; printf "\n\n\n\n4\n/usr/bin/\n\n5\n" | ./configure ; cd ../maker/src && printf "y\n\n\n" | perl Build.PL && ./Build install
-RUN ln /opt/Maker/localperl/bin/perl /usr/bin/perl ; apt-get -y install locales ; locale-gen en_US.UTF-8
+RUN ln /opt/Maker/localperl/bin/perl /usr/bin/perl ;
+ENV LANG C
+ENV LANGUAGE C
+ENV LC_ALL C
 VOLUME /data
 WORKDIR /data
