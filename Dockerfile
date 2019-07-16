@@ -5,14 +5,14 @@ ADD ./trf /usr/local/bin
 ADD ./maker-2.31.10.tgz /opt/Maker/
 RUN apt-get update && apt-get -y install \
     build-essential \
+    git \
     ssh \
     wget \
     libboost-iostreams-dev \
     zlib1g-dev \
     bamtools \
     libbamtools-dev \
-    libgd-dev \
-    hmmer ; \
+    libgd-dev ;\
   wget http://www.cpan.org/src/5.0/perl-5.22.2.tar.gz ;\
   tar -xzvf perl-5.22.2.tar.gz ;\
   mkdir localperl ;\
@@ -50,16 +50,19 @@ RUN apt-get update && apt-get -y install \
     Text::Soundex ; \
   wget http://bioinf.uni-greifswald.de/augustus/binaries/old/augustus-3.2.3.tar.gz ; \
   wget http://www.repeatmasker.org/RepeatMasker-open-4-0-7.tar.gz ; \
-  wget http://korflab.ucdavis.edu/Software/snap-2013-11-29.tar.gz ; \
   wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.2.28/ncbi-blast-2.2.28+-x64-linux.tar.gz ; \
   wget http://ftp.ebi.ac.uk/pub/software/vertebrategenomics/exonerate/exonerate-2.2.0-x86_64.tar.gz ; \
+  wget http://www.repeatmasker.org/rmblast-2.9.0+-x64-linux.tar.gz ;\
   tar -xzvf maker-2.31.10.tgz ;\
   tar -xzvf RepeatMasker-open-4-0-7.tar.gz ;\
-  tar -xzvf snap-2013-11-29.tar.gz ;\
   tar -xzvf exonerate-2.2.0-x86_64.tar.gz ;\
   tar -xzvf augustus-3.2.3.tar.gz ; \
   tar -xzvf ncbi-blast-2.2.28+-x64-linux.tar.gz ; \
-  cd snap ; make ; cd .. ; \
+  tar -xzvf rmblast-2.9.0+-x64-linux.tar.gz ;\
+  git clone https://github.com/KorfLab/SNAP.git ;\
+    cd SNAP ; \
+    make ; \
+    cd .. ; \
   wget https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-4.0.1.tar.gz ; \
       tar -xzvf openmpi-4.0.1.tar.gz ; \
       mkdir openmpi ; \
@@ -72,7 +75,7 @@ RUN apt-get update && apt-get -y install \
 
 ENV PATH=${PATH}:\
 /opt/Maker/RepeatMasker\
-:/opt/Maker/snap\
+:/opt/Maker/SNAP\
 :/opt/Maker/ncbi-blast-2.2.28+/bin\
 :/opt/Maker/exonerate-2.2.0-x86_64/bin\
 :/opt/Maker/augustus-3.2.3/bin\
@@ -80,7 +83,8 @@ ENV PATH=${PATH}:\
 :/opt/Maker/maker/bin\
 :/opt/Maker/localperl/bin
 
-RUN cd RepeatMasker ; printf "\n\n\n\n4\n/usr/bin/\n\n5\n" | ./configure ; cd ../maker/src && printf "y\n\n\n" | perl Build.PL && ./Build install
+
+RUN cd RepeatMasker ; printf "\n\n\n\n2\n/opt/Maker/rmblast-2.9.0\n\n5\n" | ./configure ; cd ../maker/src && printf "y\n\n\n" | perl Build.PL && ./Build install
 RUN ln /opt/Maker/localperl/bin/perl /usr/bin/perl ;
 ENV LANG C
 ENV LANGUAGE C
